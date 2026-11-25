@@ -8,7 +8,12 @@ ret, frame2 = cap.read()
 while cap.isOpened():
     dif = cv2.absdiff(frame1, frame2)
 
-    cv2.imshow('Doferença', dif)
+    cinza = cv2.cvtColor(dif, cv2.COLOR_BGR2GRAY)
+    blur = cv2.GaussianBlur(cinza, (5,5), 0)
+
+    _,thresh = cv2.threshold(blur, 20, 255, cv2.THRESH_BINARY)
+
+    cv2.imshow('Doferença', thresh)
 
     frame1 = frame2
     ret, frame2 = cap.read()
